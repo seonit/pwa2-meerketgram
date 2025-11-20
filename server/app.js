@@ -6,12 +6,12 @@
 
 import express from 'express';
 import './configs/env.config.js';
+import authRouter from './routes/auth.router.js';
 
 const app = express();
+app.use(express.json());
 
-app.get('/', (req, res, next) => {
-  res.status(200).send('테스트');
-});
+app.use('/api/auth', authRouter);
 
 // 해당 Port로 express 실행
 app.listen(3000);
