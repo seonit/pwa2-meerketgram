@@ -5,6 +5,8 @@
  */
 
 import { SUCCESS } from "../../configs/responseCode.config.js";
+import myError from "../errors/customs/my.error.js";
+import { logger } from "../middlewares/loggers/winston.logger.js";
 import authService from "../services/auth.service.js";
 import { createBaseResponse } from "../utils/createBaseResponse.util.js";
 
@@ -27,7 +29,7 @@ async function login(req, res, next) {
 
     return res.status(SUCCESS.status).send(createBaseResponse(SUCCESS, result));
   } catch(error) {
-    return res.status(500).send(error.message);
+    next(error);
   }
 }
 
