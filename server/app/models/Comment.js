@@ -1,14 +1,14 @@
 /**
- * @file app/models/Post.js
- * @description Post model
- * 251120 v1.0.0 seon init
+ * @file app/models/Comment.js
+ * @description Comment model
+ * 251120 v1.0.0 park init
  */
 
 import dayjs from 'dayjs';
 import { DataTypes } from 'sequelize';
 
-const modelName = 'Post'; // 모델명(JS 내부에서 사용)
-const tableName = 'posts';
+const modelName = 'Comment'; // 모델명(JS 내부에서 사용)
+const tableName = 'comments';
 
 // 컬럼 정의
 const attributes = {
@@ -18,7 +18,7 @@ const attributes = {
     primaryKey: true,
     allowNull: false,
     autoIncrement: true,
-    comment: '게시글 PK',
+    comment: '코멘트 PK',
   },
   userId: {
     field: 'user_id',
@@ -26,18 +26,23 @@ const attributes = {
     allowNull: false,
     comment: '유저 PK',
   },
+  postId: {
+    field: 'post_id',
+    type: DataTypes.BIGINT.UNSIGNED,
+    allowNull: false,
+    comment: '게시글 PK',
+  },
   content: {
     field: 'content',
-    type: DataTypes.STRING(200),
+    type: DataTypes.STRING(1000),
     allowNull: false,
     comment: '내용'
   },
-  image: {
-    field: 'image',
-    type: DataTypes.STRING(100),
-    allowNull: true,
-    defaultValue: null,
-    comment: '게시글 이미지'
+  replyId: {
+    field: 'reply_id',
+    type: DataTypes.BIGINT.UNSIGNED,
+    allowNull: false,
+    comment: '대댓글 PK',
   },
   createdAt: {
     field: 'created_at',
@@ -83,17 +88,16 @@ const options = {
   paranoid: true,     // soft delete 설정 (deletedAt 자동 관리)
 };
 
-const Post = {
+const Comment = {
   init: (sequelize) => {
     const define = sequelize.define(modelName, attributes, options);
 
     return define;
   },
   associate: (db) => {
-    db.Post.hasMany(db.Comment, { sourceKey: 'id', foreignKey: 'userId', as: 'comments' });
-    db.Post.hasMany(db.Like, { sourceKey: 'id', foreignKey: 'userId', as: 'likes' });
-    db.Post.belongsTo(db.User, { targetKey: 'id', foreignKey: 'userId', as: 'author' });
+    db.Comment.belongsTo(db.User, { targetKey: 'id', foreignKey: 'userId', as: 'author' });
+    db.Comment.belongsTo(db.Post, { targetKey: 'id', foreignKey: 'postId', as: 'post' });
   },
 };
 
-export default Post;
+export default Comment;

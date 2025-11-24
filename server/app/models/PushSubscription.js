@@ -1,14 +1,14 @@
 /**
- * @file app/models/Post.js
- * @description Post model
- * 251120 v1.0.0 seon init
+ * @file app/models/PushSubscription.js
+ * @description PushSubscription model
+ * 251120 v1.0.0 park init
  */
 
 import dayjs from 'dayjs';
 import { DataTypes } from 'sequelize';
 
-const modelName = 'Post'; // 모델명(JS 내부에서 사용)
-const tableName = 'posts';
+const modelName = 'PushSubscription'; // 모델명(JS 내부에서 사용)
+const tableName = 'push_subscriptions';
 
 // 컬럼 정의
 const attributes = {
@@ -18,7 +18,7 @@ const attributes = {
     primaryKey: true,
     allowNull: false,
     autoIncrement: true,
-    comment: '게시글 PK',
+    comment: '푸시구독 PK',
   },
   userId: {
     field: 'user_id',
@@ -26,18 +26,12 @@ const attributes = {
     allowNull: false,
     comment: '유저 PK',
   },
-  content: {
-    field: 'content',
-    type: DataTypes.STRING(200),
+  endpoint: {
+    field: 'endpoint',
+    type: DataTypes.STRING(255),
     allowNull: false,
-    comment: '내용'
-  },
-  image: {
-    field: 'image',
-    type: DataTypes.STRING(100),
-    allowNull: true,
-    defaultValue: null,
-    comment: '게시글 이미지'
+    unique: true,
+    comment: '앤드포인트',
   },
   createdAt: {
     field: 'created_at',
@@ -83,17 +77,15 @@ const options = {
   paranoid: true,     // soft delete 설정 (deletedAt 자동 관리)
 };
 
-const Post = {
+const PushSubscription = {
   init: (sequelize) => {
     const define = sequelize.define(modelName, attributes, options);
 
     return define;
   },
   associate: (db) => {
-    db.Post.hasMany(db.Comment, { sourceKey: 'id', foreignKey: 'userId', as: 'comments' });
-    db.Post.hasMany(db.Like, { sourceKey: 'id', foreignKey: 'userId', as: 'likes' });
-    db.Post.belongsTo(db.User, { targetKey: 'id', foreignKey: 'userId', as: 'author' });
+    db.PushSubscription.belongsTo(db.User, { targetKey: 'id', foreignKey: 'userId', as: 'author' });
   },
 };
 
-export default Post;
+export default PushSubscription;
