@@ -1,13 +1,12 @@
 /**
  * @file app/controllers/auth.controller.js
  * @description 인증 관련 컨트롤러
- * 251120 v1.0.0 seon init
+ * 251119 v1.0.0 seon init
  */
 
 import { SUCCESS } from "../../configs/responseCode.config.js";
-import myError from "../errors/customs/my.error.js";
-import { logger } from "../middlewares/loggers/winston.logger.js";
 import authService from "../services/auth.service.js";
+import cookieUtil from "../utils/cookie/cookie.util.js";
 import { createBaseResponse } from "../utils/createBaseResponse.util.js";
 
 // ----------------
@@ -23,11 +22,14 @@ import { createBaseResponse } from "../utils/createBaseResponse.util.js";
 async function login(req, res, next) {
   try {
     const body = req.body; // 파라미터 획득
-
+    
     // 로그인 서비스 호출
-    const result = await authService.login(body);
+    const { accessToken, refreshToken, user } = await authService.login(body);
 
-    return res.status(SUCCESS.status).send(createBaseResponse(SUCCESS, result));
+    // Cookie에 RefreshToken 설정
+    cookieUtil.setCookieRefreshToken(res, refreshToken);
+
+    return res.status(SUCCESS.status).send(createBaseResponse(SUCCESS, {accessToken, user}));
   } catch(error) {
     next(error);
   }

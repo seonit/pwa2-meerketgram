@@ -1,7 +1,7 @@
 /**
  * @file app/errors/custons/my.error.js
  * @description 커스텀 에러 객체 생성
- * 251124 v1.0.0 park init
+ * 251124 v1.0.0 seon init
  */
 
 import { SYSTEM_ERROR } from "../../../configs/responseCode.config.js";

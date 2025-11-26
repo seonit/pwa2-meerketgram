@@ -1,7 +1,7 @@
 /**
  * @file app/models/PushSubscription.js
  * @description PushSubscription model
- * 251120 v1.0.0 park init
+ * 251120 v1.0.0 seon init
  */
 
 import dayjs from 'dayjs';
