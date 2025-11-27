@@ -24,6 +24,9 @@ const router = createBrowserRouter([
       {
         path: '/posts',
         element: <PostIndex />
+      },
+      {
+        
       }
     ]
   }
