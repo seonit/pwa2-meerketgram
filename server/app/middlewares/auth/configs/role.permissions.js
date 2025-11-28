@@ -10,7 +10,7 @@ const { ADMIN, SUPER, NORMAL } = ROLE;
 // 인증 및 인가가 필요한 요청만 정의
 const ROLE_PERMISSIONS = {
   GET: [
-    {path: /^\/api\/post\/[0-9]+$/, roles: [NORMAL, SUPER]},
+    {path: /^\/api\/posts\/[0-9]+$/, roles: [NORMAL, SUPER]},
     {path: /^\/api\/comments\/[0-9]+\/[0-9]+$/, roles: [NORMAL,SUPER]}
   ],
   POST: [
