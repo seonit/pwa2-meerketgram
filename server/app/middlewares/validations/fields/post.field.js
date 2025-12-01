@@ -50,9 +50,9 @@ export const image = body('image')
   .withMessage('허용하지 않는 이미지 경로입니다.')
   .bail()
   .custom(val => {
+    // 실제 이미지 파일이 있는지 검증 처리
     const splitPath = val.split('/');
     const fullPath = path.join(pathUtil.getPostsImagePath(), splitPath[splitPath.length - 1]);
-    console.log(fullPath);
     if(!fs.existsSync(fullPath)) {
       return false;
     }
