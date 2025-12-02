@@ -2,7 +2,7 @@ import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom"
 import App from "../App.jsx";
 import Login from "../components/auth/Login.jsx";
 import Registration from "../components/users/Registration.jsx";
-import UserInfo from "../components/common/UserInfo.jsx";
+import UserInfo from "../components/users/UserInfo.jsx";
 import PostIndex from "../components/posts/PostIndex.jsx";
 import PostShow from "../components/posts/PostShow.jsx";
 import PostCreate from "../components/posts/PostCreate.jsx";
